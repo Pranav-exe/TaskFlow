@@ -1,119 +1,115 @@
-# Todo App
+# TaskFlow — MERN Task Manager with CI/CD Pipeline
 
-A modern, full-stack todo application built with the MERN stack featuring a sleek dark theme and intuitive user interface.
+A full-stack task management app built with the MERN stack, containerised with Docker and deployed on AWS EC2 via a fully automated GitHub Actions CI/CD pipeline. Built this to learn what it actually takes to ship something to production properly — not just make it work locally.
+
+
+---
 
 ## 🚀 Features
 
-- ✅ Create, read, update, and delete todos
+- ✅ Create, read, update, and delete tasks
 - 🎨 Modern dark theme with glassmorphism effects
 - 📱 Fully responsive design
-- ⚡ Real-time updates
-- 🔒 TypeScript for type safety
-- 🎯 Clean and intuitive UI/UX
+- 🔒 TypeScript for end-to-end type safety
+- 🐳 Dockerised with multi-stage builds for lean production images
+- 🔄 Automated CI/CD — push to main, live in under 3 minutes
+
+---
 
 ## 🛠️ Tech Stack
 
-**Frontend:**
-- React 18
-- TypeScript
-- TailwindCSS
-- Axios
+**Frontend:** React 18 · TypeScript · TailwindCSS · Axios  
+**Backend:** Node.js · Express.js · MongoDB · Mongoose  
+**DevOps:** Docker · GitHub Actions · AWS EC2 · Nginx · AWS CloudWatch  
 
-**Backend:**
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
+---
 
-## 📦 Installation
+## 🔄 CI/CD Pipeline
 
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB
-- npm or yarn
+Every push to `main` automatically:
 
-### Setup
+1. Builds optimised Docker image via multi-stage Dockerfile
+2. Pushes versioned image to Docker Hub
+3. SSH-deploys to AWS EC2
+4. Restarts container with latest image
 
-#### Option A: Docker (Recommended)
-This is the easiest way to get the app running with a professional multi-stage build setup.
+Deployment time went from ~15 minutes of manual work down to under 3 minutes automatically.
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Pranav-exe/Todo.git
-   cd Todo
-   ```
+---
 
-2. **Configure environment variables**
-   Create a `.env` file in the `server` directory (see `server/.env.example`).
+## ⚙️ Infrastructure
 
-3. **Start the application**
-   ```bash
-   docker compose up --build
-   ```
+- 🐳 **Docker** — multi-stage builds to keep production images lean
+- 🔄 **GitHub Actions** — automated build, push and deploy pipeline
+- ☁️ **AWS EC2** — production server hosting the containerised app
+- 🌐 **Nginx** — reverse proxy with HTTPS via Let's Encrypt
+- 🗂️ **Docker Hub** — image registry with version tagging for rollbacks
+- 📊 **AWS CloudWatch** — CPU/memory alarms and centralised log monitoring
 
-4. **Access the application**
-   - Frontend: `http://localhost:3000`
-   - Backend API: `http://localhost:4000`
+---
 
-#### Option B: Manual Setup
-(For development without Docker)
+## 📦 Local Setup
 
-1. **Install dependencies**
-   ```bash
-   npm run install-all # From root
-   ```
+### Option A: Docker (Recommended)
 
-2. **Start the application**
-   ```bash
-   npm start # From root
-   ```
+```bash
+# Clone the repo
+git clone https://github.com/Pranav-exe/taskflow.git
+cd taskflow
+
+# Configure environment variables
+cp server/.env.example server/.env
+# Fill in your MongoDB URI, JWT secret etc.
+
+# Start with Docker
+docker compose up --build
+```
+
+- Frontend: `http://localhost:3000`  
+- Backend API: `http://localhost:4000`
+
+### Option B: Manual Setup
+
+```bash
+npm run install-all
+npm start
+```
+
+---
 
 ## 📁 Project Structure
-
-```
-Todo/
+taskflow/
 ├── client/                 # React frontend
 │   ├── src/
 │   │   ├── components/    # React components
 │   │   ├── services/      # API services
 │   │   └── styles/        # CSS and styling
 │   └── package.json
-├── server/                # Express backend
-│   ├── models/           # MongoDB models
-│   ├── routes/           # API routes
-│   ├── controllers/      # Route controllers
+├── server/                 # Express backend
+│   ├── models/            # MongoDB models
+│   ├── routes/            # API routes
+│   ├── controllers/       # Route controllers
 │   └── package.json
-└── README.md
-```
+├── .github/
+│   └── workflows/
+│       └── deploy.yml     # GitHub Actions CI/CD pipeline
+└── docker-compose.yml
+---
 
 ## 🎯 Usage
 
-1. **Add a Todo**: Click the "Add" button or press Enter after typing your task
-2. **Complete a Todo**: Click the checkbox to mark as complete
-3. **Edit a Todo**: Click the edit icon to modify the task
-4. **Delete a Todo**: Click the delete icon to remove the task
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-## 👨‍💻 Author
-
-**Pranav Sharma**
-- GitHub: [@Pranav-exe](https://github.com/Pranav-exe)
-
-## 🙏 Acknowledgments
-
-- Inspired by modern todo applications
-- Built with love and coffee ☕
+1. **Add a Task** — click the Add button or press Enter
+2. **Complete a Task** — click the checkbox to mark as done
+3. **Edit a Task** — click the edit icon to modify
+4. **Delete a Task** — click the delete icon to remove
 
 ---
 
-⭐ Star this repo if you find it useful!
+## 👨‍💻 Author
+
+**Pranav Sharma**  
+[GitHub](https://github.com/Pranav-exe) ·
+
+---
+
+⭐ Star this repo if you found it useful!
